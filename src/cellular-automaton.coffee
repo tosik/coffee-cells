@@ -1,7 +1,7 @@
 Cell = require "./cell"
 
 Array::flatten = ->
-    [].concat.apply([], this)
+  [].concat.apply([], this)
 
 module.exports = class CellularAutomaton
   constructor: (@size, @deadRules, @bornRules) ->

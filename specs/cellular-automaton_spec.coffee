@@ -3,9 +3,9 @@ Cell = require '../src/cell'
 
 describe 'CellularAutomaton', ->
 
-  describe 'is constructed by size=3,', ->
+  describe 'is constructed by size=3 and rule="conways game of life",', ->
     before ->
-      @ca = new CellularAutomaton 3
+      @ca = new CellularAutomaton 3, [2, 3], [3]
     it 'has .step', ->
       @ca.step.should.exist
     it '.size should be 3', ->
@@ -37,7 +37,7 @@ describe 'CellularAutomaton', ->
 
   describe 'run .step', ->
     before ->
-      @ca = new CellularAutomaton 3
+      @ca = new CellularAutomaton 3, [2, 3], [3]
       @ca.set(new Cell(1), 0, 0)
       @ca.set(new Cell(1), 1, 0)
       @ca.set(new Cell(1), 2, 0)

@@ -4,7 +4,7 @@ Array::flatten = ->
     [].concat.apply([], this)
 
 module.exports = class CellularAutomaton
-  constructor: (@size) ->
+  constructor: (@size, @deadRules, @bornRules) ->
     @cells = (([0..@size-1].map -> new Cell) for i in [0..@size-1])
 
   set: (cell, x, y) ->
@@ -20,15 +20,9 @@ module.exports = class CellularAutomaton
 
   stepCell: (x, y) ->
     center = @cell(x, y)
-    if center.dead()
-      switch @lives(x, y).length
-        when 3 then return new Cell(1)
-        else return new Cell(0)
-    if center.lives()
-      switch @lives(x, y).length
-        when 2, 3 then return new Cell(1)
-        else return new Cell(0)
-
+    return new Cell(1) if center.dead() and @lives(x, y).length in @bornRules
+    return new Cell(1) if center.lives() and @lives(x, y).length in @deadRules
+    new Cell(0)
 
   neighbors: (x, y) ->
     (

@@ -34,7 +34,7 @@ module.exports = class CellularAutomaton
     (
       [y-1..y+1].map (yy) =>
         [x-1..x+1].map (xx) =>
-          @cell(xx, yy) unless (x == xx) and (y == yy)
+          @cell(xx, yy) unless (x is xx) and (y is yy)
     ).flatten().filter (cell) -> cell?
 
   cell: (x, y) ->

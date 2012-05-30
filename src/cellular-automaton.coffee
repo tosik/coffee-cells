@@ -1,7 +1,5 @@
 Cell = require "./cell"
-
-Array::flatten = ->
-  [].concat.apply([], this)
+require "./utilities"
 
 module.exports = class CellularAutomaton
   constructor: (@size, @deadRules, @bornRules) ->

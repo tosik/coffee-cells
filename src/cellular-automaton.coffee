@@ -38,8 +38,10 @@ module.exports = class CellularAutomaton
     ).flatten().filter (cell) -> cell?
 
   cell: (x, y) ->
-    return new Cell if @cells[y] is undefined
-    @cells[y][x] or new Cell
+    try
+      @cells[y][x]
+    catch e
+      new Cell
 
   # get neighbors live
   lives: (x, y) ->

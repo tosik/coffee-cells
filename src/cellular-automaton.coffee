@@ -1,5 +1,8 @@
 Cell = require "./cell"
 
+Array::flatten = ->
+    [].concat.apply([], this)
+
 module.exports = class CellularAutomaton
   constructor: (@size) ->
     @cells = (([0..@size-1].map -> new Cell) for i in [0..@size-1])
@@ -28,11 +31,11 @@ module.exports = class CellularAutomaton
 
 
   neighbors: (x, y) ->
-    [].concat.apply([], (
+    (
       [y-1..y+1].map (yy) =>
         [x-1..x+1].map (xx) =>
           @cell(xx, yy) unless (x == xx) and (y == yy)
-    )).filter (cell) -> cell?
+    ).flatten().filter (cell) -> cell?
 
   cell: (x, y) ->
     return new Cell if @cells[y] is undefined

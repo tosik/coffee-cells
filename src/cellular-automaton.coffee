@@ -3,7 +3,7 @@ require "./utilities"
 
 module.exports = class CellularAutomaton
   constructor: (@size, @deadRules, @bornRules) ->
-    @cells = (([0..@size-1].map -> new Cell) for i in [0..@size-1])
+    @cells = (([1..@size].map -> new Cell) for i in [1..@size])
 
   set: (cell, x, y) ->
     @cells[y][x] = cell

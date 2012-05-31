@@ -27,8 +27,7 @@ module.exports = class CellularAutomaton
     new Cell(0)
 
   neighbors: (x, y) ->
-    (
-      boxMap 3, 3, (xx, yy) =>
+    (boxMap 3, 3, (xx, yy) =>
         @cell(x + xx - 1, y + yy - 1) unless (xx is 1) and (yy is 1)
     ).flatten().filter (cell) -> cell?
 

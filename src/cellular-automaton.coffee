@@ -1,9 +1,14 @@
 Cell = require "./cell"
 require "./utilities"
 
+boxMap = (sizex, sizey, f) ->
+  [0..sizey-1].map (y) ->
+    [0..sizex-1].map (x) ->
+      f(x, y)
+
 module.exports = class CellularAutomaton
   constructor: (@size, @deadRules, @bornRules) ->
-    @cells = (([1..@size].map -> new Cell) for i in [1..@size])
+    @cells = boxMap @size, @size, -> new Cell
 
   set: (cell, x, y) ->
     @cells[y][x] = cell
@@ -12,9 +17,8 @@ module.exports = class CellularAutomaton
     @cells = @next()
 
   next: ->
-    [0..@size-1].map (y) =>
-      [0..@size-1].map (x) =>
-        @stepCell(x, y)
+    boxMap @size, @size, (x, y) =>
+      @stepCell(x, y)
 
   stepCell: (x, y) ->
     center = @cell(x, y)
@@ -24,9 +28,8 @@ module.exports = class CellularAutomaton
 
   neighbors: (x, y) ->
     (
-      [y-1..y+1].map (yy) =>
-        [x-1..x+1].map (xx) =>
-          @cell(xx, yy) unless (x is xx) and (y is yy)
+      boxMap 3, 3, (xx, yy) =>
+        @cell(x + xx - 1, y + yy - 1) unless (xx is 1) and (yy is 1)
     ).flatten().filter (cell) -> cell?
 
   cell: (x, y) ->

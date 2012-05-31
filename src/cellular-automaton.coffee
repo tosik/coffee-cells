@@ -7,7 +7,7 @@ boxMap = (sizex, sizey, f) ->
       f(x, y)
 
 module.exports = class CellularAutomaton
-  constructor: (@size, @deadRules, @bornRules) ->
+  constructor: (@size, @bornRules, @deadRules) ->
     @cells = boxMap @size, @size, -> new Cell
 
   set: (cell, x, y) ->
